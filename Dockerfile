@@ -9,6 +9,6 @@ RUN npm install -g typescript
 RUN npm install -g https://raw.githubusercontent.com/Bushidao666/mcp-trello-build/main/modelcontextprotocol-server-trello-0.1.0.tgz
 
 # Instala o node community n8n-nodes-mcp direto do repositório GitHub
-RUN npm install -g git+https://github.com/nerding-io/n8n-nodes-mcp.git
+RUN npm install -g n8n-nodes-mcp
 
 USER node
