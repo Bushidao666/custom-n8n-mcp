@@ -1,3 +1,5 @@
+# DOCKERFILE CORRIGIDO (Solução 1)
+
 FROM n8nio/n8n:latest
 
 USER root
@@ -16,13 +18,13 @@ RUN git clone https://github.com/delorenj/mcp-server-trello.git /opt/mcp-server-
 
 WORKDIR /opt/mcp-server-trello
 
-# Instala dependências + patcha o que falta pro build funcionar
-RUN npm install \
-  && npm install --save-dev @types/node \
+# Instala dependências CORRIGINDO A ORDEM + patcha o que falta pro build funcionar
+RUN npm install --save-dev @types/node \
   && npm install --save @modelcontextprotocol/sdk axios \
-  && npm run build
+  && npm install \
+  && npm run build # Mantém o build explícito por segurança, embora 'prepare' possa já tê-lo executado
 
-# Linka o MCP como global (pra funcionar com npx)
+# Linka o MCP como global (pra funcionar com npx) - Ver notas abaixo
 RUN npm link
 
 # Instala o node community do MCP Client
