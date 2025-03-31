@@ -2,22 +2,22 @@ FROM n8nio/n8n:latest
 
 USER root
 
-# Instala dependências necessárias pra build do MCP
-RUN apt-get update && apt-get install -y git
+# Instala git (pra clonar o repositório do MCP)
+RUN apk add --no-cache git
 
-# Instala TypeScript
+# Instala TypeScript globalmente
 RUN npm install -g typescript
 
-# Clona o MCP direto do GitHub
+# Clona o MCP server Trello
 RUN git clone https://github.com/delorenj/mcp-server-trello.git /opt/mcp-server-trello
 
-# Entra na pasta, instala dependências e builda o projeto
+# Instala dependências e builda o MCP
 RUN cd /opt/mcp-server-trello && npm install && npm run build
 
-# Linka como pacote global pro npx conseguir rodar
+# Linka o pacote como global (pra rodar com npx)
 RUN cd /opt/mcp-server-trello && npm link
 
-# Instala o community node n8n-nodes-mcp
+# Instala o node community do mcpClient
 RUN npm install -g git+https://github.com/nerding-io/n8n-nodes-mcp.git
 
 USER node
