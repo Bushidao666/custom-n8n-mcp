@@ -1,10 +1,10 @@
 FROM n8nio/n8n:latest
 
-# Switch to root user to install global npm packages
+# Modo root temporário pra instalar dependências globais
 USER root
 
-# Install the desired npm packages globally
-RUN npm install -g firecrawl-mcp
+# Instala o MCP do Trello globalmente
+RUN npm install -g @modelcontextprotocol/server-trello
 
-# Revert to the node user for security purposes
+# Volta pro usuário seguro
 USER node
