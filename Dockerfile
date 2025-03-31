@@ -1,37 +1,14 @@
-# DOCKERFILE CORRIGIDO (Solução 1)
-
 FROM n8nio/n8n:latest
 
 USER root
 
-# Instala ferramentas e typescript
-RUN apk add --no-cache \
-    git \
-    python3 \
-    make \
-    gcc \
-    g++ \
-  && npm install -g typescript
+# Instala TypeScript (necessário pro MCP do Trello)
+RUN npm install -g typescript
 
-# Clona o repositório
-RUN git clone https://github.com/delorenj/mcp-server-trello.git /opt/mcp-server-trello
+# Instala MCP do Trello a partir do .tgz hospedado no GitHub (substitua o link se mudar de repo)
+RUN npm install -g https://raw.githubusercontent.com/Bushidao666/mcp-trello-build/main/modelcontextprotocol-server-trello-0.1.0.tgz
 
-WORKDIR /opt/mcp-server-trello
-
-# Instala dependências CORRIGINDO A ORDEM + patcha o que falta pro build funcionar
-RUN npm install --save-dev @types/node \
-  && npm install --save @modelcontextprotocol/sdk axios \
-  && npm install \
-  && npm run build 
-  #Mantém o build explícito por segurança, embora 'prepare' possa já tê-lo executado
-
-# Linka o MCP como global (pra funcionar com npx) - Ver notas abaixo
-RUN npm link
-
-# Instala o node community do MCP Client
-RUN npm install -g git+https://github.com/nerding-io/n8n-nodes-mcp.git
-
-# Remove lixo de build
-RUN apk del make gcc g++ python3
+# Instala o node community n8n-nodes-mcp direto do repositório GitHub
+RUN npm install -g n8n-nodes-mcp
 
 USER node
