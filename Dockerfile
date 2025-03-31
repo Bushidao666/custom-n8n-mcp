@@ -22,7 +22,8 @@ WORKDIR /opt/mcp-server-trello
 RUN npm install --save-dev @types/node \
   && npm install --save @modelcontextprotocol/sdk axios \
   && npm install \
-  && npm run build # Mantém o build explícito por segurança, embora 'prepare' possa já tê-lo executado
+  && npm run build 
+  #Mantém o build explícito por segurança, embora 'prepare' possa já tê-lo executado
 
 # Linka o MCP como global (pra funcionar com npx) - Ver notas abaixo
 RUN npm link
