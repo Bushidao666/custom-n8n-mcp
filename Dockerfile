@@ -2,10 +2,7 @@ FROM n8nio/n8n:latest
 
 USER root
 
-# Instala o compilador TypeScript (tsc)
 RUN npm install -g typescript
-
-# Instala o MCP do Trello diretamente do GitHub
-RUN npm install -g git+https://github.com/delorenj/mcp-server-trello.git
+RUN npm install -g https://raw.githubusercontent.com/Bushidao666/mcp-trello-build/main/modelcontextprotocol-server-trello-0.1.0.tgz
 
 USER node
