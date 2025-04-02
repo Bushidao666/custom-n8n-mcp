@@ -7,6 +7,9 @@ USER root
 # Instalar o git usando apk (gerenciador de pacotes do Alpine)
 RUN apk update && apk add --no-cache git
 
+# Instalar o TypeScript globalmente
+RUN npm install -g typescript
+
 # Clonar o repositório do MCP Server
 RUN git clone https://github.com/delorenj/mcp-server-trello.git /app/mcp-server-trello
 
