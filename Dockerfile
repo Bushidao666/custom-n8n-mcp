@@ -4,8 +4,8 @@ FROM n8nio/n8n:latest
 # Mudar para o usuário root para instalar pacotes
 USER root
 
-# Instalar o git (necessário para clonar o repositório)
-RUN apt-get update && apt-get install -y git
+# Instalar o git usando apk (gerenciador de pacotes do Alpine)
+RUN apk update && apk add --no-cache git
 
 # Clonar o repositório do MCP Server
 RUN git clone https://github.com/delorenj/mcp-server-trello.git /app/mcp-server-trello
