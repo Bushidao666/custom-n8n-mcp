@@ -1,14 +1,24 @@
+# Usar a imagem oficial do N8N como base
 FROM n8nio/n8n:latest
 
+# Mudar para o usuário root para instalar pacotes
 USER root
 
-# Instala TypeScript (necessário pro MCP do Trello)
-RUN npm install -g typescript
+# Instalar o git (necessário para clonar o repositório)
+RUN apt-get update && apt-get install -y git
 
-# Instala MCP do Trello a partir do .tgz hospedado no GitHub (substitua o link se mudar de repo)
-RUN npm install -g https://raw.githubusercontent.com/Bushidao666/mcp-trello-build/main/modelcontextprotocol-server-trello-0.1.0.tgz
+# Clonar o repositório do MCP Server
+RUN git clone https://github.com/delorenj/mcp-server-trello.git /app/mcp-server-trello
 
-# Instala o node community n8n-nodes-mcp direto do repositório GitHub
-RUN npm install -g n8n-nodes-mcp
+# Mudar para o diretório do MCP Server e instalar suas dependências
+WORKDIR /app/mcp-server-trello
+RUN npm install
 
+# Voltar para o diretório padrão do N8N
+WORKDIR /home/node
+
+# Definir o comando padrão para iniciar o N8N
+CMD ["n8n", "start"]
+
+# Mudar de volta para o usuário node
 USER node
